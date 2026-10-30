@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+
+# Editors
+.vscode/
+.idea/
+
+# Node (test harness only — the app itself has no dependencies)
+node_modules/
+
+# Local artifacts
+*.log

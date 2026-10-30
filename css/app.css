@@ -1,0 +1,580 @@
+/* ==========================================================================
+   Component Invoice Manager — app styles on top of Bootstrap 5 (light only)
+   ========================================================================== */
+
+:root {
+  --accent: #2563eb;
+  --accent-dark: #1d4ed8;
+  --accent-soft: #eff6ff;
+  --ink: #1f2937;
+  --muted: #6b7280;
+  --line: #e5e9f0;
+  --card: #ffffff;
+  --bg: #f3f5f9;
+  --danger: #dc2626;
+  --ok: #059669;
+  --warn: #d97706;
+  color-scheme: light;
+}
+
+html { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: inherit; }
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+[hidden] { display: none !important; }
+.muted { color: var(--muted); }
+.text-right { text-align: right; }
+.nowrap { white-space: nowrap; }
+.small-note { font-size: 13px; margin-bottom: 0.4rem; }
+code { background: var(--accent-soft); color: var(--accent-dark); padding: 1px 5px; border-radius: 4px; font-size: 12px; }
+
+/* --------------------------------------------------------------------------
+   Buttons (Bootstrap, with brand accent)
+   -------------------------------------------------------------------------- */
+.btn { border-radius: 8px; font-weight: 600; transition: background .15s ease, color .15s ease, border-color .15s ease, box-shadow .15s ease; }
+.btn > i { margin-right: 0.3rem; }
+.btn-primary {
+  --bs-btn-bg: var(--accent);
+  --bs-btn-border-color: var(--accent);
+  --bs-btn-hover-bg: var(--accent-dark);
+  --bs-btn-hover-border-color: var(--accent-dark);
+  --bs-btn-active-bg: #1e40af;
+  --bs-btn-active-border-color: #1e40af;
+  --bs-btn-disabled-bg: var(--accent);
+  --bs-btn-disabled-border-color: var(--accent);
+  --bs-btn-focus-shadow-rgb: 37, 99, 235;
+}
+
+/* Icon-only button used in tables */
+.icon-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; border-radius: 7px; border: 1px solid transparent;
+  background: transparent; color: var(--muted); cursor: pointer; font-size: 14px;
+  transition: background .12s ease, color .12s ease, border-color .12s ease;
+}
+.icon-btn:hover { background: var(--accent-soft); color: var(--accent); }
+.icon-btn.danger:hover { background: #fef2f2; color: var(--danger); }
+
+/* --------------------------------------------------------------------------
+   Form controls (consistent modern look across Bootstrap's defaults)
+   -------------------------------------------------------------------------- */
+.form-control, .form-select {
+  border: 1px solid #d4dae3 !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  background-color: #fff;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 14px;
+  padding: 0.5rem 0.65rem;
+}
+.form-control:focus, .form-select:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+}
+.form-control::placeholder { color: #9ca3af; }
+.form-control:disabled, .form-select:disabled { background-color: #f1f4f8; cursor: not-allowed; opacity: 0.7; }
+
+/* Match select sizing/padding to inputs (Bootstrap uses .375rem) */
+.form-select {
+  padding: 0.5rem 2.1rem 0.5rem 0.65rem;
+  font-size: 14px;
+}
+
+label { display: block; font-weight: 600; font-size: 13px; color: #374151; margin-bottom: 0.3rem; }
+
+.inline-chk { display: flex; align-items: center; gap: 0.5rem; font-weight: 500; cursor: pointer; }
+.inline-chk input { margin: 0; width: 1.05rem; height: 1.05rem; accent-color: var(--accent); }
+
+/* Search input group: keep the rounded corners Bootstrap's grouping resets */
+.input-group-text {
+  background: #eef2f7; color: var(--muted); border: 1px solid #d4dae3 !important;
+  border-radius: 8px 0 0 8px !important;
+}
+.input-group > .form-control { border-radius: 0 8px 8px 0 !important; }
+
+/* Segmented PI/CI control */
+.segmented { display: inline-flex; border: 1px solid var(--accent); border-radius: 7px; overflow: hidden; }
+.segmented input { position: absolute; opacity: 0; pointer-events: none; }
+.segmented label {
+  margin: 0; padding: 0.3rem 0.75rem; cursor: pointer; font-size: 12px; font-weight: 600;
+  color: var(--accent); background: #fff; transition: background .15s ease, color .15s ease;
+}
+.segmented label + input + label { border-left: 1px solid var(--accent); }
+.segmented input:checked + label { background: var(--accent); color: #fff; }
+
+.sub-heading {
+  font-size: 12px; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--muted); margin: 0 0 0.6rem 0; font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   Layout: top bar, nav, main, footer
+   -------------------------------------------------------------------------- */
+.app-topbar { background: #fff; border-bottom: 1px solid var(--line); box-shadow: 0 1px 3px rgba(16,24,40,.06); position: sticky; top: 0; z-index: 50; }
+.app-topbar-inner { max-width: 1320px; margin: 0 auto; padding: 0.55rem 1rem; }
+
+.app-brand { display: flex; align-items: center; gap: 0.7rem; }
+.brand-mark {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; border-radius: 10px; background: var(--accent); color: #fff; font-size: 18px;
+}
+.brand-text { display: flex; flex-direction: column; line-height: 1.2; }
+.brand-name { font-weight: 700; font-size: 16px; color: #111827; }
+.brand-sub { font-size: 11.5px; color: var(--muted); }
+
+.app-nav { background: #fff; border-bottom: 1px solid var(--line); position: sticky; top: 55px; z-index: 40; }
+.app-nav-inner { max-width: 1320px; margin: 0 auto; display: flex; gap: 0.25rem; padding: 0 1rem; }
+.app-tab {
+  appearance: none; background: transparent; border: none; cursor: pointer;
+  padding: 0.75rem 1rem; font-size: 14px; font-weight: 600; color: var(--muted);
+  border-bottom: 2.5px solid transparent; transition: color .12s ease, border-color .12s ease;
+  font-family: inherit;
+}
+.app-tab:hover { color: var(--ink); }
+.app-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.app-tab i { margin-right: 0.35rem; }
+
+.app-main { max-width: 1320px; margin: 0 auto; padding: 1.4rem 1rem 2rem; }
+
+.app-footer {
+  max-width: 1320px; margin: 0 auto; padding: 0.6rem 1rem 1.6rem;
+  color: var(--muted); font-size: 12.5px;
+}
+.footer-autosave { color: var(--ok); margin-left: 0.85rem; font-weight: 600; }
+
+.loading-card { text-align: center; padding: 3rem 1rem; color: var(--muted); font-size: 15px; }
+.loading-card .alert { margin: 0; text-align: left; }
+
+/* --------------------------------------------------------------------------
+   Panels (cards) — custom class to avoid clashing with Bootstrap's .card
+   -------------------------------------------------------------------------- */
+.panel {
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(16,24,40,.04); padding: 1.1rem 1.25rem; margin-bottom: 1.1rem;
+}
+.panel-header {
+  display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+  flex-wrap: wrap; padding-bottom: 0.6rem; border-bottom: 1px solid var(--line);
+  margin-bottom: 1rem;
+}
+.panel-header h5 { margin: 0; font-size: 15.5px; font-weight: 700; color: #111827; }
+.panel-header h5 i { color: var(--accent); margin-right: 0.4rem; }
+
+/* --------------------------------------------------------------------------
+   Invoice list
+   -------------------------------------------------------------------------- */
+.toolbar { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; margin-bottom: 1rem; }
+.toolbar-spacer { flex: 1 1 auto; }
+.search-box { min-width: 250px; flex: 0 1 300px; }
+
+.invoice-table { width: 100%; border-collapse: collapse; }
+.invoice-table thead th {
+  font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted);
+  border-bottom: 2px solid var(--line) !important; padding: 0.55rem 0.6rem;
+}
+.invoice-table tbody td { border-bottom: 1px solid var(--line); padding: 0.65rem 0.6rem; font-size: 14px; vertical-align: middle; }
+.invoice-table tbody tr:hover { background: #f8fafd; }
+.row-click { cursor: pointer; }
+.no-cell { display: flex; align-items: center; gap: 0.5rem; }
+
+.badge {
+  display: inline-block; border-radius: 999px; padding: 2px 10px;
+  font-size: 11.5px; font-weight: 700; letter-spacing: .02em; white-space: nowrap; line-height: 1.4;
+}
+.badge.type-PI { background: #e0edff; color: #1d4ed8; }
+.badge.type-CI { background: #dcfce7; color: #15803d; }
+.badge.st-draft { background: #f1f5f9; color: #475569; }
+.badge.st-issued { background: #e0edff; color: #1d4ed8; }
+.badge.st-paid { background: #dcfce7; color: #15803d; }
+.badge.st-cancelled { background: #fee2e2; color: #b91c1c; }
+
+/* Status quick-toggle: a <select> styled as the status pill (keeps the
+   badge look while being a native, accessible dropdown) */
+select.st-badge {
+  appearance: none; -webkit-appearance: none;
+  border: none; border-radius: 999px; padding: 2px 24px 2px 10px;
+  font-size: 11.5px; font-weight: 700; letter-spacing: .02em; line-height: 1.5;
+  font-family: inherit; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5' viewBox='0 0 8 5'%3E%3Cpath d='M0 0h8L4 5z' fill='%236b7280'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 9px center;
+}
+select.st-badge:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+select.st-badge.st-draft { background-color: #f1f5f9; color: #475569; }
+select.st-badge.st-issued { background-color: #e0edff; color: #1d4ed8; }
+select.st-badge.st-paid { background-color: #dcfce7; color: #15803d; }
+select.st-badge.st-cancelled { background-color: #fee2e2; color: #b91c1c; }
+
+.empty-state { text-align: center; padding: 3rem 1rem; color: var(--muted); }
+.empty-state i { font-size: 42px; color: #cbd5e1; margin-bottom: 0.5rem; }
+
+.list-summary { padding-top: 0.7rem; font-size: 12.5px; color: var(--muted); }
+
+/* Mobile: invoice list switches from a table to summary cards */
+@media screen and (max-width: 767px) {
+  .invoice-table thead { display: none; }
+  .invoice-table, .invoice-table tbody { display: block; width: 100%; }
+  .invoice-table tr {
+    display: grid; align-items: center;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "no     total"
+      "cust   cust"
+      "date   status"
+      "act    act";
+    row-gap: 0.3rem;
+    border: 1px solid var(--line); border-radius: 10px;
+    background: #fff; padding: 0.75rem 0.8rem; margin-bottom: 0.7rem;
+    box-shadow: 0 1px 2px rgba(16,24,40,.04);
+  }
+  .invoice-table tr:last-child { margin-bottom: 0; }
+  .invoice-table td { border: none; padding: 0; font-size: 14px; }
+  .invoice-table td.c-no { grid-area: no; }
+  .invoice-table td.c-total {
+    grid-area: total; text-align: right; font-weight: 700; font-size: 15px;
+    font-variant-numeric: tabular-nums;
+  }
+  .invoice-table td.c-cust { grid-area: cust; }
+  .invoice-table td.c-date { grid-area: date; color: var(--muted); font-size: 13px; }
+  .invoice-table td.c-status { grid-area: status; text-align: right; }
+  .invoice-table td.c-status select.st-badge { font-size: 12px; padding: 3px 26px 3px 12px; }
+  .invoice-table td.c-act {
+    grid-area: act; display: flex; justify-content: flex-end; gap: 0.35rem;
+    margin-top: 0.15rem;
+  }
+  .invoice-table td.c-act .icon-btn {
+    width: 38px; height: 38px; font-size: 15px;
+    background: #f8fafc; border: 1px solid var(--line);
+  }
+  .invoice-table tr:active { background: var(--accent-soft); }
+}
+
+/* --------------------------------------------------------------------------
+   Editor
+   -------------------------------------------------------------------------- */
+.editor-top {
+  position: sticky; top: 104px; z-index: 30;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f4f8ff 100%);
+  border: 1px solid var(--line); border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.1rem;
+  flex-wrap: wrap; backdrop-filter: blur(6px);
+  box-shadow: 0 1px 2px rgba(16,24,40,.04);
+}
+.editor-heading h4 { margin: 0 0 0.15rem 0; font-size: 19px; font-weight: 700; color: #111827; }
+.editor-heading p { margin: 0; font-size: 13px; }
+.editor-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+.party-preview {
+  background: #f8fafc; border: 1px dashed #d4dae3; border-radius: 10px;
+  padding: 0.8rem 1rem; margin-bottom: 0.7rem; font-size: 13.5px; line-height: 1.55;
+}
+.party-preview .pp-name { font-weight: 700; font-size: 14.5px; color: #111827; }
+.party-preview .pp-line { color: #475569; }
+.party-preview .pp-hint { color: #94a3b8; font-style: italic; }
+
+/* Previous-buyer picker above the Bill To fields */
+.buyer-pick { margin-bottom: 0.7rem; font-size: 13px !important; padding: 0.38rem 2rem 0.38rem 0.6rem !important; }
+
+#ship-block.dimmed { opacity: 0.55; }
+
+/* Items table */
+.items-scroll { margin: 0 -0.3rem; }
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.items-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.items-table thead th {
+  font-size: 10.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted);
+  border-bottom: 1.5px solid var(--line); padding: 0.4rem 0.35rem; text-align: left; white-space: nowrap;
+}
+.items-table tbody td { padding: 0.28rem 0.35rem; border-bottom: 1px solid #eef1f6; vertical-align: middle; }
+.items-table .form-control, .items-table .form-select {
+  font-size: 13px !important; padding: 0.38rem 0.45rem !important; border-radius: 6px !important; width: 100%;
+}
+.items-table input[type="number"], .items-table input.it-price { text-align: right; }
+.items-table textarea {
+  resize: none; overflow: hidden; display: block;
+  line-height: 1.4; min-height: 50px; vertical-align: top;
+}
+.items-table .c-idx { text-align: center; color: var(--muted); font-size: 12.5px; }
+.items-table .it-amount { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; padding-right: 0.5rem; }
+.items-table .it-amount, .items-table .icon-btn { color: var(--muted); }
+
+/* Mobile & tablet-portrait: line items switch from a wide table to editable cards */
+@media screen and (max-width: 767px) {
+  .items-scroll { margin: 0; overflow: visible; }
+  .items-table, .items-table tbody { display: block; width: 100%; }
+  .items-table thead { display: none; }
+  .items-table tr {
+    display: block; position: relative;
+    border: 1px solid var(--line); border-radius: 10px;
+    background: #fff; padding: 0.7rem 0.75rem 0.65rem;
+    margin-bottom: 0.75rem; box-shadow: 0 1px 2px rgba(16,24,40,.04);
+  }
+  .items-table tr:last-child { margin-bottom: 0; }
+  .items-table td { display: block; border: none; padding: 0.2rem 0; width: auto; }
+  .items-table td[data-label]::before {
+    content: attr(data-label);
+    display: block; font-size: 10px; font-weight: 700; letter-spacing: .05em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 2px;
+  }
+  .items-table td.c-idx { font-weight: 700; font-size: 13px; color: var(--ink); padding-bottom: 0.35rem; }
+  .items-table td.f-desc { margin-top: 0.15rem; }
+  .items-table td.f-qty, .items-table td.f-price {
+    display: inline-block; vertical-align: top; margin-top: 0.45rem;
+  }
+  .items-table td.f-qty { width: 49%; margin-right: 2%; }
+  .items-table td.f-price { width: 49%; }
+  .items-table td.f-amount { margin-top: 0.5rem; text-align: right; font-size: 14.5px; padding-right: 0.35rem; }
+  .items-table td.f-del { position: absolute; top: 0.4rem; right: 0.4rem; padding: 0; }
+  .items-table td.f-del .icon-btn { width: 36px; height: 36px; }
+  /* 16px inputs prevent iOS Safari auto-zoom on focus */
+  .items-table .form-control, .items-table .form-select { font-size: 16px !important; padding: 0.5rem 0.6rem !important; }
+  .items-table textarea { min-height: 64px; }
+}
+
+/* Totals */
+.totals { background: #f8fafc; border: 1px solid var(--line); border-radius: 10px; padding: 0.8rem 1rem; }
+.tot-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.32rem 0; }
+.tot-row span:first-child { color: #475569; font-size: 13.5px; font-weight: 600; }
+.tot-row .tot-val { font-variant-numeric: tabular-nums; font-weight: 600; }
+.tot-row input { width: 130px; text-align: right; padding: 0.35rem 0.5rem !important; font-size: 13.5px !important; }
+.tot-row.grand { border-top: 1.5px solid var(--line); margin-top: 0.35rem; padding-top: 0.55rem; }
+.tot-row.grand span:first-child { color: #111827; font-size: 14.5px; }
+.tot-row.grand .tot-val { color: var(--accent); font-size: 18px; font-weight: 800; }
+
+/* --------------------------------------------------------------------------
+   Settings / storage
+   -------------------------------------------------------------------------- */
+#storage-info { font-size: 13.5px; }
+
+/* Company chop upload row */
+.chop-row { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+.chop-preview {
+  width: 86px; height: 86px; flex: 0 0 auto;
+  border: 1px dashed #d4dae3; border-radius: 10px; background: #f8fafc;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  padding: 4px; color: var(--muted); font-size: 11.5px;
+}
+.chop-preview img { max-width: 100%; max-height: 100%; }
+
+/* --------------------------------------------------------------------------
+   Toasts (custom — named app-toast to avoid Bootstrap's .toast)
+   -------------------------------------------------------------------------- */
+#toasts { position: fixed; bottom: 1.2rem; right: 1.2rem; display: flex; flex-direction: column; gap: 0.5rem; z-index: 200; }
+.app-toast {
+  display: flex; align-items: center; gap: 0.55rem;
+  background: #111827; color: #f9fafb; border-radius: 10px; padding: 0.65rem 1rem;
+  font-size: 13.5px; font-weight: 500; box-shadow: 0 8px 24px rgba(16,24,40,.25);
+  opacity: 0; transform: translateY(8px); transition: opacity .25s ease, transform .25s ease;
+  max-width: 380px;
+}
+.app-toast.show { opacity: 1; transform: translateY(0); }
+.app-toast.success i { color: #34d399; }
+.app-toast.alert { background: #7f1d1d; }
+.app-toast.alert i { color: #fca5a5; }
+.app-toast.info i { color: #93c5fd; }
+
+/* --------------------------------------------------------------------------
+   Modal
+   -------------------------------------------------------------------------- */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(15,23,42,.45); backdrop-filter: blur(2px);
+  display: flex; align-items: center; justify-content: center; z-index: 100; padding: 1rem;
+}
+.modal-box {
+  background: #fff; border-radius: 14px; padding: 1.4rem 1.5rem; max-width: 430px; width: 100%;
+  box-shadow: 0 20px 50px rgba(16,24,40,.25);
+}
+.modal-box h5 { margin: 0 0 0.5rem 0; font-weight: 700; }
+.modal-box p { margin-bottom: 1rem; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 0.5rem; }
+
+/* --------------------------------------------------------------------------
+   Responsive tweaks
+   -------------------------------------------------------------------------- */
+@media screen and (max-width: 640px) {
+  .app-main { padding: 1rem 0.6rem 1.5rem; }
+  .editor-top { flex-direction: column; position: static; }
+  .editor-actions { width: 100%; }
+  .editor-actions .btn { flex: 1 1 auto; }
+  .toolbar .form-select { flex: 1 1 45%; }
+  .search-box { flex: 1 1 100%; min-width: 0; }
+  /* The tall wrapped top bar would overlap the sticky nav on phones —
+     keep both static there instead. */
+  .app-topbar { position: static; }
+  .app-nav { position: static; }
+  /* 16px prevents iOS Safari from auto-zooming when an input gains focus */
+  .form-control, .form-select { font-size: 16px !important; }
+}
+
+/* --------------------------------------------------------------------------
+   UI polish: animations, badges, dirty indicator, focus states
+   -------------------------------------------------------------------------- */
+@keyframes viewIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes modalIn { from { opacity: 0; transform: translateY(10px) scale(.98); } to { opacity: 1; transform: none; } }
+
+#view-list:not([hidden]), #view-edit:not([hidden]), #view-settings:not([hidden]) { animation: viewIn .18s ease; }
+.modal-overlay { animation: fadeIn .15s ease; }
+.modal-box { animation: modalIn .18s ease; }
+
+/* Invoice count badge on the Invoices tab */
+.tab-count {
+  display: inline-block; background: var(--accent-soft); color: var(--accent-dark);
+  border-radius: 999px; font-size: 11px; font-weight: 700; padding: 1px 8px; margin-left: 0.4rem;
+  vertical-align: middle;
+}
+.app-tab.active .tab-count { background: var(--accent); color: #fff; }
+
+/* Pending-save warning colour (editor subtitle) */
+.text-warn { color: var(--warn); }
+
+/* Keyboard focus outlines for custom controls */
+.icon-btn:focus-visible, .app-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 7px; }
+.segmented input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Cleaner number inputs: tabular digits, no spinners in the items table */
+input[type="number"] { font-variant-numeric: tabular-nums; }
+.items-table input[type="number"]::-webkit-outer-spin-button,
+.items-table input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.items-table input[type="number"] { appearance: textfield; -moz-appearance: textfield; }
+
+/* Invoice rows: keep actions subtle until the row is hovered (pointer devices) */
+@media screen and (hover: hover) {
+  .invoice-table tbody tr .icon-btn { opacity: .55; transition: opacity .12s ease, background .12s ease, color .12s ease; }
+  .invoice-table tbody tr:hover .icon-btn { opacity: 1; }
+}
+
+/* --------------------------------------------------------------------------
+   PRINT DOCUMENT — formal A4 invoice layout
+   -------------------------------------------------------------------------- */
+#print-area { display: none; }
+
+.doc {
+  color: #000; background: #fff;
+  font-family: "Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  font-size: 11.5px; line-height: 1.45; margin: 0 auto; max-width: 186mm;
+}
+.doc h6 { margin: 0 0 4px 0; font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; }
+
+.doc-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 14px; }
+.doc-seller { flex: 1 1 55%; }
+.doc-company { font-size: 16px; font-weight: 700; margin-bottom: 3px; }
+.doc-pre { white-space: pre-line; }
+
+.doc-title-block { flex: 0 0 215px; text-align: left; }
+.doc-title {
+  font-size: 15px; font-weight: 700; letter-spacing: .08em; text-align: center;
+  border: 2px solid #000; padding: 6px 14px; margin-bottom: 6px;
+}
+.doc-meta { border-collapse: collapse; }
+.doc-meta th, .doc-meta td { border: 1px solid #999; padding: 2.5px 7px; font-size: 10.5px; }
+.doc-meta th { background: #f0f0f0; text-align: right; font-weight: 600; }
+
+.doc-parties { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 12px; }
+.doc-party { border: 1px solid #999; padding: 6px 8px; }
+.doc-party .party-name { font-weight: 700; }
+.doc-party .party-body { white-space: pre-line; }
+.doc-party .doc-meta { width: 100%; }
+
+.doc-items { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+.doc-items thead { display: table-header-group; }
+.doc-items th {
+  background: #ececec; border: 1px solid #777; padding: 4px 5px;
+  font-size: 10px; text-transform: uppercase;
+}
+.doc-items td { border: 1px solid #999; padding: 4px 5px; vertical-align: top; }
+.doc-items tr { page-break-inside: avoid; }
+.doc-items .r { text-align: right; font-variant-numeric: tabular-nums; }
+.doc-items .c { text-align: center; }
+.nowrap { white-space: nowrap; }
+
+.doc-totals-wrap { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; }
+.doc-words { flex: 1 1 50%; font-size: 10.5px; border: 1px solid #999; padding: 6px 8px; }
+.doc-totals { flex: 0 0 230px; }
+.doc-totals table { width: 100%; border-collapse: collapse; }
+.doc-totals td { border: 1px solid #999; padding: 3.5px 7px; font-size: 11px; }
+.doc-totals td:first-child { background: #f0f0f0; text-align: right; width: 40%; }
+.doc-totals td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+.doc-totals .grand td { font-weight: 700; background: #ececec; }
+
+.doc-bank { margin-top: 10px; border: 1px solid #999; padding: 6px 8px; font-size: 10.5px; }
+.doc-bank table { border-collapse: collapse; width: 100%; }
+.doc-bank td { padding: 1.5px 4px; vertical-align: top; }
+.doc-bank td.k { width: 165px; font-weight: 600; }
+
+.doc-remarks, .doc-declare { margin-top: 10px; font-size: 10.5px; }
+.doc-declare { font-style: italic; border-top: 1px solid #999; padding-top: 6px; }
+
+.doc-sign { margin-top: 34px; display: flex; justify-content: flex-end; }
+.doc-sign .sign-box { width: 250px; text-align: center; position: relative; }
+.sign-company { font-weight: 700; }
+.sign-line { border-top: 1px solid #000; margin: 38px 0 3px 0; }
+
+/* Company chop: stamped in the centre of the signature area, slightly rotated.
+   Uses an <img> (not a CSS background) so it still prints when the browser's
+   "print background graphics" option is off. */
+.sign-box .chop {
+  position: absolute; left: 50%; bottom: 6px;
+  transform: translateX(-50%) rotate(-12deg);
+  width: 100px; height: auto; max-height: 100px;
+  opacity: .92;
+  pointer-events: none;
+}
+
+.doc-foot { margin-top: 14px; text-align: center; font-size: 9.5px; color: #555; }
+
+/* Draft recovery banner (auto-saved editor form) */
+.draft-callout {
+  display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+  background: #fffbeb; border: 1px solid #fde68a; color: #92400e;
+  border-radius: 12px; padding: 0.8rem 1.1rem; margin-bottom: 1.1rem;
+  box-shadow: 0 1px 2px rgba(16,24,40,.04);
+}
+.draft-callout i { font-size: 17px; color: var(--warn); }
+
+/* --------------------------------------------------------------------------
+   PRINT PREVIEW OVERLAY (screen only — like a PDF viewer)
+   -------------------------------------------------------------------------- */
+body.preview-open { overflow: hidden; }
+
+#preview-overlay {
+  position: fixed; inset: 0; z-index: 150;
+  background: #39424e;
+  display: flex; flex-direction: column;
+  animation: fadeIn .18s ease;
+}
+.preview-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+  background: #1c2431; color: #e5e7eb; padding: 0.6rem 1rem; flex-wrap: wrap;
+  box-shadow: 0 2px 8px rgba(0,0,0,.3);
+}
+.preview-title { font-size: 14px; font-weight: 600; }
+.preview-title i { color: #93c5fd; margin-right: 0.35rem; }
+.preview-actions { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+#preview-zoom-label { font-size: 12px; color: #9ca3af; min-width: 44px; text-align: center; }
+.preview-bar .icon-btn { color: #d1d5db; }
+.preview-bar .icon-btn:hover { background: rgba(255,255,255,.12); color: #fff; }
+.preview-scroll { flex: 1 1 auto; overflow: auto; padding: 1.75rem 1rem 3rem; }
+.preview-paper {
+  background: #fff; width: 210mm; min-height: 297mm; margin: 0 auto;
+  padding: 11mm; border-radius: 2px;
+  box-shadow: 0 12px 36px rgba(0,0,0,.45);
+}
+
+/* Print rules */
+@media print {
+  @page { size: A4 portrait; margin: 11mm; }
+  html, body { background: #fff !important; margin: 0; padding: 0; }
+  .app-topbar, .app-nav, .app-main, .app-footer, #toasts, #modal-confirm, #preview-overlay { display: none !important; }
+  #print-area { display: block !important; }
+  .doc { max-width: none; font-size: 11px; }
+  .app-toast { display: none !important; }
+}
